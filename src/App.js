@@ -2,6 +2,8 @@ import logo, { ReactComponent } from './logo.svg';
 import './App.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Client from './Client'
+import ClientForm from './ClientForm'
 
 
 
@@ -17,32 +19,17 @@ class App extends React.Component {
       {  id: 2, nom:"Justine"},
       {  id: 3, nom:"Jack"}
       
-    ],
-    compteur:0,
-    nouveauClient:''
+    ]
   }
 
-  handleChange = (event) => {
-    const value = event.currentTarget.value;
-    this.setState({nouveauClient: value})
-  }
-
-  handleSubmit = (event) => {
-    event.preventDefault()
-    const id = new Date().getTime();
-    const nom = this.state.nouveauClient;
-    this.addClient(id,nom);
-    this.setState({nouveauClient: ''})
-  }
-
-  addClient = (id,nom) => {
+  addClient = client => {
     const clients = [...this.state.clients]
-    clients.push({id , nom})
+    clients.push(client)
     this.setState({clients})
   }
 
-  removeClient = (id) => {
-    const clients = {...this.state.clients};
+  removeClient = id => { 
+    const clients = [...this.state.clients];
     const index = clients.findIndex((client)  => client.id === id 
     )
     clients.splice(index, 1)
@@ -59,15 +46,10 @@ class App extends React.Component {
      <h1>{this.title}</h1>
      <ul>
      {this.state.clients.map(client => (
-     <li>
-       {client.nom}<button onClick={ () => this.removeClient(client.id)}>X</button>
-     </li>
+    <Client details={client} onDelete={this.removeClient}/>
      ))}
      </ul>
-     <form  onSubmit={this.handleSubmit}>
-       <input value={this.state.nouveauClient} onChange={this.handleChange} type="text" placeholder="Ajouter un client"/>
-       <button>Ajouter</button>
-     </form>
+     <ClientForm onClientAdd={this.addClient}/>
    </div>
   );
 }}
