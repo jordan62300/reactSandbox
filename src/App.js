@@ -30,6 +30,12 @@ class App extends React.Component {
   removeClient = (id) => {
     const clients = this.state.clients.slice();
     console.log(id)
+    const index = clients.findIndex((client)  => client.id === id 
+    )
+
+    clients.splice(index, 1)
+    this.setState({clients : clients})
+
   }
 
 
