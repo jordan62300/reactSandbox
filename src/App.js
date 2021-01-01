@@ -19,13 +19,16 @@ function App() {
   }
 
   const title="Liste des clients"
+  const element = <li>Teste variable</li>
   return (
    <div>
      <h1>{title}</h1>
      <ul>
-       <li>Jordan <button>X</button></li>
-       <li>Justine<button>X</button></li>
-       <li>Jack<button>X</button></li>
+     {state.clients.map(client => (
+     <li>
+       {client.nom}<button>X</button>
+     </li>
+     ))}
      </ul>
      <form>
        <input type="text" placeholder="Ajouter un client"/>
