@@ -33,25 +33,20 @@ class App extends React.Component {
     const nom = this.state.nouveauClient;
     this.addClient(id,nom);
     this.setState({nouveauClient: ''})
-    
   }
 
   addClient = (id,nom) => {
-    const clients = this.state.clients.slice();
-    clients.push({id: id, nom: nom})
-
-    this.setState({ clients: clients})
+    const clients = [...this.state.clients]
+    clients.push({id , nom})
+    this.setState({clients})
   }
 
   removeClient = (id) => {
-    const clients = this.state.clients.slice();
-    console.log(id)
+    const clients = {...this.state.clients};
     const index = clients.findIndex((client)  => client.id === id 
     )
-
     clients.splice(index, 1)
-    this.setState({clients : clients})
-
+    this.setState({clients})
   }
 
 
