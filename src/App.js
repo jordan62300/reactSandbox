@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom';
 
 class App extends React.Component {
 
+  
 
   state = {
     clients: [
@@ -17,12 +18,27 @@ class App extends React.Component {
       {  id: 3, nom:"Jack"}
       
     ],
-    compteur:0
+    compteur:0,
+    nouveauClient:''
   }
 
-  addClient = () => {
+  handleChange = (event) => {
+    const value = event.currentTarget.value;
+    this.setState({nouveauClient: value})
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault()
+    const id = new Date().getTime();
+    const nom = this.state.nouveauClient;
+    this.addClient(id,nom);
+    this.setState({nouveauClient: ''})
+    
+  }
+
+  addClient = (id,nom) => {
     const clients = this.state.clients.slice();
-    clients.push({id: 4, nom: "Jojo"})
+    clients.push({id: id, nom: nom})
 
     this.setState({ clients: clients})
   }
@@ -46,8 +62,6 @@ class App extends React.Component {
   return (
    <div>
      <h1>{this.title}</h1>
-     {this.state.compteur}
-     <button onClick={this.addClient}>Clik me</button>
      <ul>
      {this.state.clients.map(client => (
      <li>
@@ -55,8 +69,8 @@ class App extends React.Component {
      </li>
      ))}
      </ul>
-     <form>
-       <input type="text" placeholder="Ajouter un client"/>
+     <form  onSubmit={this.handleSubmit}>
+       <input value={this.state.nouveauClient} onChange={this.handleChange} type="text" placeholder="Ajouter un client"/>
        <button>Ajouter</button>
      </form>
    </div>
