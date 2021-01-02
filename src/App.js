@@ -1,5 +1,6 @@
+import logo from './logo.svg';
 import './App.css';
-import React from 'react';
+import React , {useState} from 'react';
 import ReactDOM from 'react-dom';
 import Client from './Client'
 import ClientForm from './ClientForm'
@@ -8,51 +9,47 @@ import Counter from './Counter'
 
 
 
-class App extends React.Component {
+const App = () => {
 
-  
 
-  state = {
-    clients: [
+  const [clients, setClients] = useState([
       
-      {  id: 1, nom:"Jordan"},
-      {  id: 2, nom:"Justine"},
-      {  id: 3, nom:"Jack"}
-      
-    ]
+    {  id: 1, nom:"Jordan"},
+    {  id: 2, nom:"Justine"},
+    {  id: 3, nom:"Jack"}
+    
+  ])
+
+
+ const addClient = (client) => {
+    const updtatedClients = [...clients]
+    updtatedClients.push(client)
+    setClients(updtatedClients)
   }
 
-  addClient = client => {
-    const clients = [...this.state.clients]
-    clients.push(client)
-    this.setState({clients})
-  }
-
-  removeClient = id => { 
-    const clients = [...this.state.clients];
-    const index = clients.findIndex((client)  => client.id === id 
-    )
-    clients.splice(index, 1)
-    this.setState({clients})
+ const removeClient = (id) => { 
+    const updtatedClients = [...clients];
+    const index = updtatedClients.findIndex((client)  => client.id === id )
+    updtatedClients.splice(index, 1)
+    setClients(updtatedClients)
   }
 
 
 
-   title="Liste des clients"
+  const title="Liste des clients"
 
-  render() {
   return (
    <div>
-     <h1>{this.title}</h1>
+     <h1>{title}</h1>
      <Counter />
      <ul>
-     {this.state.clients.map(client => (
-    <Client details={client} onDelete={this.removeClient}/>
+     {clients.map(client => (
+    <Client details={client} onDelete={removeClient}/>
      ))}
      </ul>
-     <ClientForm onClientAdd={this.addClient}/>
+     <ClientForm onClientAdd={addClient}/>
    </div>
   );
-}}
+}
 
 export default App;

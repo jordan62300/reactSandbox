@@ -16,6 +16,7 @@ const ClientForm  = (props) => {
         const nom = nouveauClient;
         props.onClientAdd({id,nom})
        // console.log(this.state.nouveauClient)
+       setNouveauClient("")
       }
 
     
